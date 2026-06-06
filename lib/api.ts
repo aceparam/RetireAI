@@ -65,6 +65,13 @@ export const api = {
       }),
     }),
 
+  coachStatus: () => request<{ available: boolean }>("/coach/status"),
+  coach: (question: string, context: Record<string, unknown>, history: { role: "user" | "coach"; text: string }[]) =>
+    request<{ answer: string }>("/coach", {
+      method: "POST",
+      body: JSON.stringify({ question, context, history }),
+    }),
+
   listScenarios: () => request<RemoteScenario[]>("/scenarios"),
   createScenario: (name: string, profile: ProfileInputs) =>
     request<RemoteScenario>("/scenarios", {

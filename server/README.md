@@ -22,6 +22,8 @@ user's financial profile and saved scenarios in PostgreSQL.
 | `GET` | `/scenarios` | JWT | List saved scenarios |
 | `POST` | `/scenarios` | JWT | Save a scenario |
 | `DELETE` | `/scenarios/:id` | JWT | Delete a scenario |
+| `GET` | `/coach/status` | JWT | Whether the Claude-powered coach is configured |
+| `POST` | `/coach` | JWT | Ask the AI coach (grounded in the user's plan) |
 
 ## Data model
 
@@ -63,6 +65,19 @@ user's financial profile and saved scenarios in PostgreSQL.
 
    With `DB_SYNCHRONIZE=true` (dev) TypeORM auto-creates tables. In production set
    it to `false` and use migrations.
+
+## AI Coach (Claude)
+
+The `/coach` endpoint calls the **Claude API** (`claude-opus-4-8` by default) via
+the official `@anthropic-ai/sdk`, passing the user's precomputed plan figures as
+grounding context so answers stay consistent with the dashboard. It uses adaptive
+thinking at `medium` effort.
+
+- Set `ANTHROPIC_API_KEY` (from [console.anthropic.com](https://console.anthropic.com))
+  to enable it; override the model with `COACH_MODEL`.
+- When the key is **unset**, `/coach` returns `503` and the frontend transparently
+  falls back to the built-in offline rule-based coach.
+- The endpoint is JWT-protected so the API key is only ever used for signed-in users.
 
 ## Production notes
 

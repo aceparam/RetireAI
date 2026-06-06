@@ -141,11 +141,24 @@ Google sign-in and persistence are implemented in the [`server/`](./server)
 The TypeScript types in `lib/types.ts` map 1:1 to the API DTOs and TypeORM
 entities, so `ProfileInputs` / `Scenario` flow through unchanged.
 
+## 🤖 AI Coach (Claude)
+
+The AI Coach is wired to the **Claude API** (`claude-opus-4-8`) through the NestJS
+`/coach` endpoint:
+
+- The frontend sends the question plus a **compact, precomputed snapshot of your
+  plan** (required vs projected corpus, readiness, success probability, gap, etc.)
+  as grounding context — so Claude's advice is always consistent with the numbers
+  on your dashboard. Built with the official `@anthropic-ai/sdk` using adaptive
+  thinking.
+- **Graceful degradation:** when you're signed in *and* `ANTHROPIC_API_KEY` is set,
+  the coach is Claude-powered; otherwise it transparently falls back to the
+  built-in **offline rule-based engine** (`lib/coach.ts`). The chat works either way.
+- Enable it by setting `ANTHROPIC_API_KEY` on the API (see `server/README.md`).
+
 ### Still on the roadmap
 
-- **Generative AI Coach:** route the user's question + a profile summary through an
-  API route to the **Claude API**; the rule-based answers in `coach.ts` are a
-  strong grounding context and offline fallback.
+- **Streaming coach replies** (SSE) for token-by-token output.
 - **Live market data:** pre-fill expected returns & holdings from a market-data
   provider.
 
