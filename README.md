@@ -65,12 +65,34 @@ live in `ASSET_CLASSES`. Amounts are formatted in lakh/crore via `format.ts`.
 
 ## 🚀 Getting Started
 
+### Frontend (runs standalone, offline-first)
+
 ```bash
 npm install
 npm run dev        # http://localhost:3000
 ```
 
-Other scripts:
+The app is fully usable with **no backend** — all state persists to
+`localStorage`. To enable Google sign-in and cloud sync, set the API URL:
+
+```bash
+cp .env.local.example .env.local   # NEXT_PUBLIC_API_URL=http://localhost:4000
+```
+
+### Backend (optional — Google OAuth + PostgreSQL persistence)
+
+```bash
+cd server
+cp .env.example .env               # fill in Google OAuth creds + DATABASE_URL
+npm install
+npm run start:dev                  # http://localhost:4000
+```
+
+See [`server/README.md`](./server/README.md) for the full API reference and
+Google Cloud setup. With both running, click **Sign in with Google** in the app:
+your profile and saved scenarios sync to Postgres across devices.
+
+Other frontend scripts:
 
 ```bash
 npm run build      # production build
@@ -100,25 +122,35 @@ lib/                    # the financial engine (see above) + store
 
 ---
 
-## 🔌 Extending to a Full Backend
+## 🔐 Authentication & Cloud Sync
 
-The app is frontend-complete with a **backend-ready data layer**: all state flows
-through the Zustand store (`lib/store.ts`) behind a small, swappable interface.
-To productionize per the original spec:
+Google sign-in and persistence are implemented in the [`server/`](./server)
+**NestJS + PostgreSQL** API and wired into the frontend:
 
-- **Auth (OAuth / Google):** add `next-auth` with the Google provider; gate the
-  `(app)` route group behind a session check.
-- **Database (PostgreSQL):** replace the `persist` middleware with API calls to a
-  **NestJS** service exposing `ProfileInputs`, `Scenario`, and `Goal` resources
-  (the types in `lib/types.ts` map 1:1 to tables).
-- **Generative AI Coach:** route the user's question + a serialized profile summary
-  through an API route to the **Claude API**; the rule-based answers in `coach.ts`
-  make a strong grounding context and offline fallback.
-- **Live market data:** the calculation inputs (expected returns, holdings) can be
-  pre-filled from a portfolio/market data provider.
+- **Google OAuth** is owned by the backend (`passport-google-oauth20`). The
+  frontend redirects to `GET /auth/google`; after consent, the API mints a **JWT**
+  and bounces back to `/auth/callback?token=…`.
+- The **JWT** is stored client-side (`lib/auth.ts`) and sent as a Bearer token by
+  the API client (`lib/api.ts`).
+- **`SyncProvider`** (`components/sync-provider.tsx`) reconciles local ⇄ remote
+  state: on sign-in it pulls your saved profile & scenarios (or seeds them from
+  local), then debounces profile pushes and mirrors scenario create/delete.
+- **Offline-first:** auth is *additive*. With no `NEXT_PUBLIC_API_URL` set, the
+  app runs entirely on `localStorage` and the sign-in UI is hidden.
+
+The TypeScript types in `lib/types.ts` map 1:1 to the API DTOs and TypeORM
+entities, so `ProfileInputs` / `Scenario` flow through unchanged.
+
+### Still on the roadmap
+
+- **Generative AI Coach:** route the user's question + a profile summary through an
+  API route to the **Claude API**; the rule-based answers in `coach.ts` are a
+  strong grounding context and offline fallback.
+- **Live market data:** pre-fill expected returns & holdings from a market-data
+  provider.
 
 **Hosting:** deploy the frontend to Vercel; host the NestJS API + Postgres on
-AWS/Azure.
+AWS/Azure (set `DB_SSL=true`, `DB_SYNCHRONIZE=false`, and use migrations).
 
 ---
 

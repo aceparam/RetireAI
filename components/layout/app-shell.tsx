@@ -6,6 +6,8 @@ import { usePathname } from "next/navigation";
 import { Menu, X, PiggyBank, Sparkles } from "lucide-react";
 import { NAV_ITEMS } from "./nav";
 import { ThemeToggle } from "../theme-toggle";
+import { AuthButton } from "../auth-button";
+import { SyncProvider } from "../sync-provider";
 import { Button } from "../ui/button";
 import { cn } from "@/lib/utils";
 import { usePlanner } from "@/lib/store";
@@ -70,6 +72,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex min-h-screen">
+      <SyncProvider />
       {/* Desktop sidebar */}
       <aside className="hidden w-64 shrink-0 border-r border-border bg-card/50 lg:block">
         <div className="sticky top-0 h-screen">{SidebarContent}</div>
@@ -111,6 +114,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
             <span className="hidden text-sm text-muted-foreground sm:inline">
               {profile.name ? `Hi, ${profile.name}` : capitalize(profile.persona)}
             </span>
+            <AuthButton compact />
             <ThemeToggle />
           </div>
         </header>

@@ -162,6 +162,10 @@ interface PlannerState {
   saveScenario: (name: string) => void;
   deleteScenario: (id: string) => void;
   loadScenario: (id: string) => void;
+
+  // Sync (backend) helpers
+  setScenarios: (scenarios: SavedScenario[]) => void;
+  replaceScenarioId: (oldId: string, next: SavedScenario) => void;
 }
 
 export const usePlanner = create<PlannerState>()(
@@ -210,6 +214,10 @@ export const usePlanner = create<PlannerState>()(
         const sc = get().scenarios.find((x) => x.id === id);
         if (sc) set({ profile: JSON.parse(JSON.stringify(sc.profile)) });
       },
+
+      setScenarios: (scenarios) => set({ scenarios }),
+      replaceScenarioId: (oldId, next) =>
+        set((s) => ({ scenarios: s.scenarios.map((x) => (x.id === oldId ? next : x)) })),
     }),
     {
       name: "retireai-store",

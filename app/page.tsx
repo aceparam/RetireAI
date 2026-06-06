@@ -12,12 +12,12 @@ import {
   Flame,
   Receipt,
   Target,
-  ShieldCheck,
   TrendingUp,
   Sparkles,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { AuthButton, SyncBadge } from "@/components/auth-button";
 import { Onboarding } from "@/components/onboarding";
 import { usePlanner } from "@/lib/store";
 
@@ -47,6 +47,7 @@ export default function LandingPage() {
           <span className="text-lg font-bold">RetireAI</span>
         </div>
         <div className="flex items-center gap-2">
+          <AuthButton compact />
           <ThemeToggle />
           <Link href="/dashboard">
             <Button variant="ghost" size="sm">Dashboard</Button>
@@ -78,7 +79,7 @@ export default function LandingPage() {
             </Button>
           </div>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-muted-foreground">
-            <span className="flex items-center gap-1.5"><ShieldCheck className="h-4 w-4 text-success" /> Private — data stays on your device</span>
+            <SyncBadge />
             <span className="flex items-center gap-1.5"><TrendingUp className="h-4 w-4 text-primary" /> Realistic India-tuned assumptions</span>
             <span className="flex items-center gap-1.5"><Sparkles className="h-4 w-4 text-warning" /> Under 5 minutes to set up</span>
           </div>
