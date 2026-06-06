@@ -1,0 +1,30 @@
+{
+  "$schema": "https://codesandbox.io/schemas/tasks.json",
+  "setupTasks": [
+    {
+      "name": "Install dependencies",
+      "command": "npm install"
+    }
+  ],
+  "tasks": {
+    "dev": {
+      "name": "RetireAI (Next.js dev server)",
+      "command": "npm run dev",
+      "runAtStart": true,
+      "preview": {
+        "port": 3000
+      }
+    },
+    "build": {
+      "name": "Production build",
+      "command": "npm run build"
+    },
+    "start": {
+      "name": "Serve production build",
+      "command": "npm run start",
+      "preview": {
+        "port": 3000
+      }
+    }
+  }
+}

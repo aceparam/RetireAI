@@ -8,6 +8,22 @@ math, rich data visualization, and an AI-powered coaching layer.
 
 ![Next.js](https://img.shields.io/badge/Next.js-14-black) ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue) ![Tailwind](https://img.shields.io/badge/TailwindCSS-3-38bdf8) ![Recharts](https://img.shields.io/badge/Recharts-2-22c55e)
 
+## ▶️ Try it instantly
+
+[![Open in CodeSandbox](https://img.shields.io/badge/Open%20in-CodeSandbox-151515?logo=codesandbox&logoColor=white)](https://codesandbox.io/p/github/aceparam/RetireAI/main)
+&nbsp;
+[![Open in StackBlitz](https://img.shields.io/badge/Open%20in-StackBlitz-1389FD?logo=stackblitz&logoColor=white)](https://stackblitz.com/github/aceparam/RetireAI/tree/main)
+
+**One click → live app.** CodeSandbox spins up a cloud VM, runs `npm install`
+then `npm run dev` (configured in [`.codesandbox/tasks.json`](./.codesandbox/tasks.json)),
+and opens the preview on port 3000. The app is **offline-first** — every
+calculator, dashboard, chart, and the rule-based AI coach work with no backend
+or sign-in. (Google sign-in, cloud sync, and the Claude-powered coach are
+optional — see the backend setup below.)
+
+> Importing a **private** repo? CodeSandbox/StackBlitz will ask you to authorize
+> their GitHub app first (you own the repo, so one approval is all it takes).
+
 ---
 
 ## ✨ Features
