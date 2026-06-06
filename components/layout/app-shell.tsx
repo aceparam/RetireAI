@@ -98,7 +98,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {/* Main */}
       <div className="flex min-w-0 flex-1 flex-col">
         <header className="no-print sticky top-0 z-30 flex h-16 items-center justify-between gap-3 border-b border-border bg-background/80 px-4 backdrop-blur-xl sm:px-6">
-          <div className="flex items-center gap-2">
+          <div className="flex min-w-0 items-center gap-2">
             <Button
               variant="ghost"
               size="icon"
@@ -130,7 +130,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
 function CurrentPageTitle({ pathname }: { pathname: string }) {
   const item = NAV_ITEMS.find((i) => i.href === pathname);
   if (!item) return null;
-  return <p className="text-sm font-semibold sm:text-base">{item.label}</p>;
+  return <p className="truncate text-sm font-semibold sm:text-base">{item.label}</p>;
 }
 
 function capitalize(s: string) {

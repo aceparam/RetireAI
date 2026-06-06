@@ -56,10 +56,25 @@
     @apply border-border;
   }
 
+  html,
+  body {
+    /* Guard against any element forcing the page wider than the viewport on
+       mobile. `clip` (unlike `hidden`) doesn't create a scroll container, so
+       the sticky header and 100vh layout keep working. */
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
   body {
     @apply bg-background text-foreground;
     font-feature-settings: "rlig" 1, "calt" 1;
     -webkit-font-smoothing: antialiased;
+  }
+
+  /* SVGs (charts, the readiness gauge) scale down instead of overflowing —
+     they all carry a viewBox, so they stay crisp. */
+  svg {
+    max-width: 100%;
   }
 
   /* Smooth theme transitions */

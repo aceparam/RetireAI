@@ -145,7 +145,7 @@ export default function PortfolioPage() {
         <CardContent>
           <div className="space-y-3">
             {profile.assets.map((a) => (
-              <div key={a.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-[1fr_180px_160px_120px_auto] sm:items-end">
+              <div key={a.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_160px_140px_110px_auto] lg:items-end">
                 <div className="space-y-1">
                   <Label className="text-xs">Name</Label>
                   <Input value={a.name} onChange={(e) => updateAsset(a.id, { name: e.target.value })} />
@@ -204,7 +204,7 @@ export default function PortfolioPage() {
           ) : (
             <div className="space-y-3">
               {profile.liabilities.map((l) => (
-                <div key={l.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-[1fr_160px_140px_120px_120px_auto] sm:items-end">
+                <div key={l.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_150px_130px_110px_110px_auto] lg:items-end">
                   <div className="space-y-1">
                     <Label className="text-xs">Name</Label>
                     <Input value={l.name} onChange={(e) => updateLiability(l.id, { name: e.target.value })} />

@@ -152,7 +152,7 @@ export default function IncomePage() {
           ) : (
             <div className="space-y-3">
               {profile.incomeSources.map((i) => (
-                <div key={i.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-[1fr_160px_140px_110px_100px_auto] sm:items-end">
+                <div key={i.id} className="grid grid-cols-1 gap-3 rounded-xl border border-border p-3 sm:grid-cols-2 lg:grid-cols-[minmax(0,1fr)_150px_130px_100px_90px_auto] lg:items-end">
                   <div className="space-y-1">
                     <Label className="text-xs">Name</Label>
                     <Input value={i.name} onChange={(e) => updateIncome(i.id, { name: e.target.value })} />
